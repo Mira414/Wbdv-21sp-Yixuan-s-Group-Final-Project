@@ -44,7 +44,7 @@ const PetList =({pets, findAllPets, findPetsForUser, deletePet, updatePet})=>{
                     Pet
                 </Link>
             </div>
-            <Link to={`/users/report/report/pet`}>
+            <Link to={`/users/${currentUser.userId}/report/report/pet`}>
                 <i className="fas fa-plus wm-icon wm-floating-child">Post Pet</i>
             </Link>
             {/*<div className="wm-floating-child">*/}

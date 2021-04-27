@@ -60,6 +60,11 @@ const PetTab = ()=>{
             {/*</ul>*/}
         </div>
         {
+            currentUser.userType === "user" && <Link to={`/users/${currentUser.userId}/report/report/pet`}>
+                <i className="btn btn-primary btn-block">Post Pet</i>
+            </Link>
+        }
+        {
             currentUser.userType === "admin" && <div className="row">
             <Link to={"/admin/pets"} className="col">
                     <i className="btn btn-primary btn-block">Back to PetList</i>

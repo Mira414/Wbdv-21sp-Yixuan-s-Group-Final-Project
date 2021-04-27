@@ -60,7 +60,10 @@ const Register =({addUser, user}) => {
         if(changeUser.password === null || changeUser.password === ""){
             setPasswordError(true)
         }
-        if(!userNameError && !userTypeError && !emailError && !passwordError){
+        if(rePasswordError.isNull){
+            setRePasswordError({...rePasswordError, isNull: true})
+        }
+        if(!userNameError && !userTypeError && !emailError && !passwordError && !rePasswordError.isNull && !rePasswordError.isWrong){
             if(isAdmin){
                 console.log("admin create new user")
                 userService.createUserWithoutLogin(changeUser)

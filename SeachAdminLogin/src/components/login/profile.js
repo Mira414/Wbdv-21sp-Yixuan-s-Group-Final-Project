@@ -385,9 +385,10 @@ const Profile =({findUserForUsername, show = false})=> {
                     </Link>
                 }
                     {/*// <Link to={`/petlist/${changeUser.userId}`}>*/}
+                    {/* // <Link to={`/users/${changeUser.userId}/pets`}>*/}
                 {
                     userType === "user" &&
-                     <Link to={`/users/${changeUser.userId}/pets`}>
+                     <Link to="admin/pets">
                         <i className="btn btn-primary btn-block">See my post</i>
                     </Link>
                 }

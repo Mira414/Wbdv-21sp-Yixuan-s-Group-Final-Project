@@ -79,7 +79,12 @@ const PetReport = () => {
             console.log(currentUser.userId + " update " + petId + " =" + JSON.stringify(cachedPet))
             petService.updatePet(petId, cachedPet)
                 .then(res => console.log(res))
-            history.push("/users/" + userId + "/pets")
+            console.log("update")
+            // if(currentUser.userType === "admin"){
+                history.push("/admin/pets")
+            // }else{
+            //     history.push("/users/" + userId + "/pets")
+            // }
         }
     }
 
@@ -90,7 +95,11 @@ const PetReport = () => {
             console.log(currentUser.userId + " report new pet=" + JSON.stringify(cachedPet))
             petService.createPet(currentUser.userId, cachedPet)
                 .then(res => console.log(res))
-            history.push("/admin/pets")
+            // if(currentUser.userType === "admin"){
+                history.push("/admin/pets")
+            // }else{
+            //     history.push("/users/" + userId + "/pets")
+            // }
         }
     }
 
@@ -150,7 +159,7 @@ const PetReport = () => {
                     </div>
                     {
                         breedError &&
-                        <div className="alert alert-primary">user type is required!!</div>
+                        <div className="alert alert-primary">Breed is required!!</div>
                     }
                     <div className="form-group row">
                         <label className="col-2">Gender</label>
