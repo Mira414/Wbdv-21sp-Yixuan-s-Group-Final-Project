@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from "react"
-import {Route} from "react-router-dom";
+// import {Route} from "react-router-dom";
 import NavBar from "../nav-bar";
-import UserList from "./user/user-list";
-import PetList from "./pet/pet-list";
+// import UserList from "./user/user-list";
+// import PetList from "./pet/pet-list";
 
 import sessionUserService from "../../services/user-service"
-import {Provider} from "react-redux";
-import {combineReducers, createStore} from "redux";
-import adminPetReducer from "../../reducer/admin-pet-reducer";
-import adminUserReducer from "../../reducer/admin-user-reducer";
+import "./admin.css"
+// import {Provider} from "react-redux";
+// import {combineReducers, createStore} from "redux";
+// import adminPetReducer from "../../reducer/admin-pet-reducer";
+// import adminUserReducer from "../../reducer/admin-user-reducer";
 
 const Admin = ()=>{
 
@@ -29,14 +30,14 @@ const Admin = ()=>{
         })
     }, [])
 
-    const reducer = combineReducers({
-        adminPetReducer,
-        adminUserReducer : adminUserReducer
-    })
+    // const reducer = combineReducers({
+    //     adminPetReducer,
+    //     adminUserReducer : adminUserReducer
+    // })
+    //
+    // const store = createStore(reducer)
 
-    const store = createStore(reducer)
-
-    return <Provider store={store}>
+    return <>
         <NavBar />
         {
             loginOrNot &&
@@ -47,19 +48,15 @@ const Admin = ()=>{
                         <h3 className="wm-logo">Administration</h3>
                     </div>
                 }
-                <Route path="/admin/users">
-                    <UserList />
-                </Route>
-                <Route path="/admin/pets">
-                    <PetList />
-                </Route>
+                {/*<UserList />*/}
+                {/*<PetList />*/}
             </>
         }
         {
             !loginOrNot &&
             <h3>Please log in </h3>
         }
-    </Provider>
+    </>
 }
 
 export default Admin

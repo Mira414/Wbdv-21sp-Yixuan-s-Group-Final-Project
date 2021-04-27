@@ -24,10 +24,21 @@ import PetReport from "./components/admin/pet/pet-report";
 import UserDetail from "./components/admin/user/user_detail";
 import UserList from "./components/admin/user/user-list";
 import PetList from "./components/admin/pet/pet-list";
+import {combineReducers, createStore} from "redux";
+import adminPetReducer from "./reducer/admin-pet-reducer";
+import adminUserReducer from "./reducer/admin-user-reducer";
+import {Provider} from "react-redux";
 
 export const AuthContext = createContext();
 const petFinderKey = "IERoPwTvvsgAtqgT71P7EhCx8nLMCsx4xvvP0zywOA6eSzWWal"
 const petFinderSecret = "InqFifeZbO9QOwtLXTDQROwrzovrIbF2YfKVVl0o"
+
+const reducer = combineReducers({
+    adminPetReducer,
+    adminUserReducer : adminUserReducer
+})
+
+const store = createStore(reducer)
 
 //modified by Meng Wang
 // function App() {
@@ -83,6 +94,7 @@ const App = () => {
                 {/*    <UserManagement/>*/}
 
                 {/*</Route>*/}
+                <Provider store={store}>
               <Route path="/">
                   <UserManagement/>
               </Route>
@@ -117,12 +129,12 @@ const App = () => {
                     exact={true}
                     component={Admin}>
                 </Route>
-                {/*<Route path="/admin/users">*/}
-                {/*    <UserList />*/}
-                {/*</Route>*/}
-                {/*<Route path="/admin/pets">*/}
-                {/*    <PetList />*/}
-                {/*</Route>*/}
+                <Route path="/admin/users" exact={true} component = {UserList}>
+                    {/*<UserList />*/}
+                </Route>
+                <Route path="/admin/pets" exact={true} component = {PetList}>
+                    {/*<PetList />*/}
+                </Route>
 
                 <Route
                     path={["/users/:userId/pets", "/users/:userId/pets/:petId"]}
@@ -130,7 +142,7 @@ const App = () => {
                     component={PetTab}>
                 </Route>
                 <Route
-                    path={ ["/users/report/:edit/pet", "/users/report/:edit/pet/:petId"]}
+                    path={ ["/users/:userId/report/:edit/pet", "/users/:userId/report/:edit/pet/:petId"]}
                     exact={true}
                     component={PetReport}>
                 </Route>
@@ -139,6 +151,7 @@ const App = () => {
                     exact={true}
                     component={UserDetail}>
                 </Route>
+                </Provider>
                 {/*========end=======*/}
             </div>
           </div>

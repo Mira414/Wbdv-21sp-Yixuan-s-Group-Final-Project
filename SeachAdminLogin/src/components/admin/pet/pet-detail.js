@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-const PetDetail = ({pet}) => {
+const PetDetail = ({pet, userId}) => {
 
     // const {userId, petId} =useParams()
 
@@ -37,7 +37,7 @@ const PetDetail = ({pet}) => {
 
             <div className="row wm-botton-margin">
                 <div className="wm-auto-margin">
-                   <Link to={`/users/report/edit/pet/${pet.petId}`}>
+                   <Link to={`/users/${userId}/report/edit/pet/${pet.petId}`}>
                         <i className="btn btn-primary wm-icon">Edit</i>
                     </Link>
                     {/*<button type="submit" className="btn btn-primary wm-icon">Delete</button>*/}

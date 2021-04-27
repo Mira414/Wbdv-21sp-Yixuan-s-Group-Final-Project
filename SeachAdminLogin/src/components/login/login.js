@@ -17,7 +17,7 @@ const Login = ({findUserForUsername, users, updateUser, user}) => {
 
     //added by Meng Wang
     const [userNameError, setUserNameError] = useState(false);
-    // const [passwordError, setPasswordError] = useState({"isNull": false, "isWrong": false});
+    const [passwordError, setPasswordError] = useState({"isNull": false, "isWrong": false});
     const history = useHistory()
 
     //added by Meng Wang
@@ -79,6 +79,14 @@ const Login = ({findUserForUsername, users, updateUser, user}) => {
                 <div className="form-group">
                     <label>Password</label>
                     <input type="password" id="password" value={changeUser.password} className="form-control"
+                           onBlur={(e) =>{
+                               if(e.target.value) {
+                                   setPasswordError({...passwordError, isNull: false})
+                               }
+                               else{
+                                   setPasswordError({...passwordError, isNull: true})
+                               }
+                           }}
                            onChange={(e) =>{
                                setChangeUser({
                                    ...changeUser,
@@ -88,16 +96,15 @@ const Login = ({findUserForUsername, users, updateUser, user}) => {
 
 
                     {
-                        // passwordError.isWrong &&
-                        submitted && changeUser.password !== user.password &&
+                        passwordError.isWrong &&
+                        // submitted && changeUser.password !== user.password &&
                         <div className="alert alert-primary">Password is not correct!!</div>
 
                     }
                     {
-                        // passwordError.isNull &&
-                        submitted && !changeUser.password &&
+                        passwordError.isNull &&
+                        // submitted && !changeUser.password &&
                         <div className="alert alert-primary">Password is required!!</div>
-
                     }
                 </div>
 

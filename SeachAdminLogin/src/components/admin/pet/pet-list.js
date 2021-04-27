@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import petService from "../../../services/admin-service/pet-service"
 import sessionUserService from "../../../services/user-service"
 import PetRow from "./pet-row";
-import userService from "../../../services/admin-service/user-service";
+// import userService from "../../../services/admin-service/user-service";
 import {connect} from "react-redux";
 
 // const PetList =({pets, findAllPets, findPetsForUser, deletePet})=>{
@@ -17,13 +17,14 @@ const PetList =({pets, findAllPets, findPetsForUser, deletePet, updatePet})=>{
         sessionUserService.profile().then(user => {
             if(user !== null && user.username !== null){
                 setCurrentUser(user)
-                console.log("pet-list changeUser.username = " + currentUser.username)
+                console.log("pet-list currentUser.username = " + currentUser.username)
                 if(user.userType === "admin"){
                     console.log("admin view petlist ")
                     findAllPets()
                 }else{
                     console.log(user.username + " view petlist ")
                     findPetsForUser(user.userId)
+                    console.log(user.username + "'s petlist " + JSON.stringify(pets))
                 }
             }else{
                 alert("Please login first")
@@ -34,7 +35,7 @@ const PetList =({pets, findAllPets, findPetsForUser, deletePet, updatePet})=>{
 
     return <div>
         <div className="nav nav-tabs wm-auto-margin">
-            <div className="nav-item">
+            <div className="nav-item wm-nav-item">
                 {
                     currentUser.userType === "admin" &&
                     <Link className="nav-link" to="/admin/users">User</Link>
@@ -42,10 +43,10 @@ const PetList =({pets, findAllPets, findPetsForUser, deletePet, updatePet})=>{
                 <Link className="nav-link active" to="/admin/pets">
                     Pet
                 </Link>
-                <Link to={`/users/report/report/pet`}>
-                    <i className="fas fa-plus wm-icon"></i>
-                </Link>
             </div>
+            <Link to={`/users/report/report/pet`}>
+                <i className="fas fa-plus wm-icon wm-floating-child">Post Pet</i>
+            </Link>
             {/*<div className="wm-floating-child">*/}
             {/*    <input placeholder="search pets"/>*/}
             {/*    <i className="fas fa-search wm-icon"></i>*/}
@@ -68,7 +69,7 @@ const PetList =({pets, findAllPets, findPetsForUser, deletePet, updatePet})=>{
                     </thead>
                 <tbody>
                 {
-                    pets.map(pet=><PetRow pet={pet} deletePet={deletePet}/>)
+                    pets.map(pet=><PetRow pet={pet} deletePet={deletePet} key={pet.petId}/>)
                 }
                 </tbody>
             </table>
@@ -87,14 +88,19 @@ const dtpm = (dispatch) =>{
     return {
         findAllPets : () =>
             petService.findAllPets()
-                .then(pets=>dispatch({type: "FIND_ALL_PETS", pets})),
+                .then(allPets=>dispatch({type: "FIND_ALL_PETS", allPets})),
         findPetsForUser : (userId) =>
             petService.findPetsForUser(userId)
-                .then(pets => dispatch({type: "FIND_PETS_FOR_USER", pets})),
+                .then(petsForUser => {
+                    console.log("findPetsForUser" + JSON.stringify(petsForUser))
+                    dispatch({type: "FIND_PETS_FOR_USER", petsForUser})
+                }),
         deletePet : (delPetId)=> {
             console.log("delete pet = " + delPetId)
-            petService.deletePet(delPetId).then(
-                dispatch({type: "ADMIN_DELETE_USER", petIdToDelete: delPetId}),
+            petService.deletePet(delPetId).then(status => {
+                    // console.log("deletePet:" + delPetId)
+                    dispatch({type: "ADMIN_DELETE_PET", petIdToDelete: delPetId})
+                }
             )
         },
         updatePet: (petId, pet) => {

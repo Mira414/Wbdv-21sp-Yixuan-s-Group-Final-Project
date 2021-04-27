@@ -21,10 +21,12 @@ const findPetsForUser = (userId)=>{
 
 
 const findPetsByKey = ()=>{}
+
+///api/pets/{pid}
 const updatePet = (petId, pet) =>
     fetch(`${PET_URL}/pets/${petId}`, {
         method: 'PUT',
-        credentials: 'same-origin',
+        // credentials: 'same-origin',
         body: JSON.stringify(pet),
         headers:{
             'content-type': 'application/json'

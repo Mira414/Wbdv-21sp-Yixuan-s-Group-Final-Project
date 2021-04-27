@@ -24,11 +24,11 @@ const UserList =({
             <div className="nav-item wm-nav-item">
                 {/*<a className="nav-link text-white"*/}
                 <Link className="nav-link active" to="/admin/users">User</Link>
-                <Link to="/register">
-                    <i className="fas fa-plus wm-icon"></i>
-                </Link>
                 <Link className="nav-link" to="/admin/pets">Pet</Link>
             </div>
+            <Link to="/register">
+                <i className="fas fa-plus wm-floating-child wm-icon"> Create User</i>
+            </Link>
             {/*<div className="wm-floating-child">*/}
             {/*    <input placeholder="search users"/>*/}
             {/*    <i className="fas fa-search wm-icon"></i>*/}

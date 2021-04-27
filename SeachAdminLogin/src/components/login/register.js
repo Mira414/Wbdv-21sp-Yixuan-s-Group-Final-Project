@@ -23,6 +23,7 @@ const Register =({addUser, user}) => {
     const [userTypeError, setUserTypeError] = useState(false);
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
+    const [rePasswordError, setRePasswordError] = useState({isNull : false, isWrong : false});
     const [isAdmin, setIsAdmin] = useState(false)
     // deleted by Meng Wang
     // const [submitted, setSubmitted] = useState(false);
@@ -107,7 +108,7 @@ const Register =({addUser, user}) => {
                 {
                     !isAdmin && <h3>Sign up</h3>
                 }
-                {JSON.stringify(changeUser)}
+                {/*{JSON.stringify(changeUser)}*/}
                 <div className="container-fluid">
                 <div className="form-group row">
                     <label className="col-2">
@@ -152,7 +153,7 @@ const Register =({addUser, user}) => {
                 </div>
                 {
                     userTypeError && !changeUser.userType &&
-                    <div className="alert alert-primary">user type is required!!</div>
+                    <div className="alert alert-primary">User type is required!!</div>
                 }
                 <div className="form-group row">
                     <label className="col-2">First name</label>
@@ -222,8 +223,39 @@ const Register =({addUser, user}) => {
                 </div>
                 {
                     passwordError &&
-                    <div className="alert alert-primary">password is required!!</div>
+                    <div className="alert alert-primary">Password is required!!</div>
+                }
 
+                <div className="form-group row">
+                    <label className="col-2">
+                        <label className="text-danger">*</label>
+                        Reenter Password
+                    </label>
+                    <input type="password" className="form-control col-10"
+                           onBlur={(e) =>{
+                               if(e.target.value) {
+                                   setRePasswordError({...rePasswordError, isNull: false})
+                                   if(e.target.value !== changeUser.password){
+                                       setRePasswordError({...rePasswordError, isWrong: true})
+                                   }else{
+                                       setRePasswordError({...rePasswordError, isWrong: false})
+                                   }
+                               }
+                               else{
+                                   setRePasswordError({...rePasswordError, isNull: true})
+                               }
+                           }
+                           }
+                           onChange={()=>setRePasswordError({...rePasswordError, isNull: false})}
+                           placeholder="Enter password" />
+                </div>
+                {
+                    rePasswordError.isNull &&
+                    <div className="alert alert-primary">The reentered password is required!!</div>
+                }
+                {
+                    rePasswordError.isWrong &&
+                    <div className="alert alert-primary">The reentered password should be same to the password.</div>
                 }
 
                 <i className="btn btn-primary btn-block"

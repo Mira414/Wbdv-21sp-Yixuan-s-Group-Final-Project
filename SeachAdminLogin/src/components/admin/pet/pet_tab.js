@@ -9,7 +9,7 @@ import sessionUserService from "../../../services/user-service";
 
 const PetTab = ()=>{
 
-    const {petId} = useParams()
+    const {petId, userId} = useParams()
     const [pets, setPets] = useState([])
     const [currentUser, setCurrentUser] = useState({})
 
@@ -19,9 +19,10 @@ const PetTab = ()=>{
             if(user !== null && user.username !== null){
                 setCurrentUser(user)
                 // userService.findUserById(userId).then(user => setUserName(user.username))
-                // 从userlist挑战过来，查看某用户post的多个pets
+                // 从userlist跳转过来，查看某用户post的多个pets
                 if(petId === "undefined" || typeof petId === "undefined") {
-                    petService.findPetsForUser(user.userId).then(pets => setPets(pets))
+                    console.log("petId === undefined")
+                    petService.findPetsForUser(userId).then(pets => setPets(pets))
                 }
                 // 从petlist点击某一pet名字之后跳转过来查看
                 else{
@@ -39,21 +40,16 @@ const PetTab = ()=>{
 
     return <>
             <NavBar />
-            <h3>Reported Pet By <label className="font-italic font-weight-bold">{currentUser.username}</label></h3>
+            {/*<h3>Reported Pet By <label className="font-italic font-weight-bold">{currentUser.username}</label></h3>*/}
+            <h3>Reported Pet</h3>
 
             {/*<ul className="nav nav-tabs">*/}
             <div className="row">
                 {
                     pets.map(pet=>
                         // <li className={`nav-item`} key={pet.petId}>
-                            <PetDetail pet={pet}/>)
+                            <PetDetail pet={pet} userId={userId}/>)
                         // </li>)
-                }
-                {
-                    currentUser.userType === "admin" &&
-                    <Link to={"/admin/pets"}>
-                            <i className="btn btn-primary btn-block">Back to PetList</i>
-                        </Link>
                 }
                 {/*{*/}
                 {/*    currentUser.userType === "user" &&*/}
@@ -63,6 +59,16 @@ const PetTab = ()=>{
                 {/*}*/}
             {/*</ul>*/}
         </div>
+        {
+            currentUser.userType === "admin" && <div className="row">
+            <Link to={"/admin/pets"} className="col">
+                    <i className="btn btn-primary btn-block">Back to PetList</i>
+                </Link>
+            <Link to={"/admin/users"} className="col">
+                    <i className="btn btn-primary btn-block">Back to UserList</i>
+                </Link>
+            </div>
+        }
     </>
 }
 
